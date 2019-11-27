@@ -8,4 +8,4 @@ COPY tests /tests
 RUN python -m pip install -r requirements.txt
 RUN python -m unittest tests.jenkins_functions_test
 
-ENTRYPOINT [ "python", "jenkins_job.py" ]
+ENTRYPOINT [ "python", "/jenkins_job.py" ]
