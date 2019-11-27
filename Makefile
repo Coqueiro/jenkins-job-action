@@ -2,14 +2,15 @@ APP=jenkins-job-action
 BUMP_LEVEL?=patch
 VERSION=`cat VERSION`
 
+
 python:
-	@jenkins_url=${jenkins_url} \
-	 jenkins_user=${jenkins_user} \
-	 jenkins_token=${jenkins_token} \
-	 job_name=${job_name} \
-	 jenkins_params=${jenkins_params} \
-	 console_log_regex=${console_log_regex} \
-	 console_log_regex_group=${console_log_regex_group} \
+	@INPUT_JENKINS_URL=${INPUT_JENKINS_URL} \
+	 INPUT_JENKINS_USER=${INPUT_JENKINS_USER} \
+	 INPUT_JENKINS_TOKEN=${INPUT_JENKINS_TOKEN} \
+	 INPUT_JOB_NAME=${INPUT_JOB_NAME} \
+	 INPUT_JENKINS_PARAMS=${INPUT_JENKINS_PARAMS} \
+	 INPUT_CONSOLE_LOG_REGEX=${INPUT_CONSOLE_LOG_REGEX} \
+	 INPUT_CONSOLE_LOG_REGEX_GROUP=${INPUT_CONSOLE_LOG_REGEX_GROUP} \
 	 python3 jenkins_job.py
 
 build:
@@ -17,13 +18,13 @@ build:
 
 run:
 	@docker run \
-		-e "jenkins_url=${jenkins_url}" \
-		-e jenkins_user=${jenkins_user} \
-		-e jenkins_token=${jenkins_token} \
-		-e job_name=${job_name} \
-		-e jenkins_params=${jenkins_params} \
-	 	-e console_log_regex=${console_log_regex} \
-	 	-e console_log_regex_group=${console_log_regex_group} \
+		-e INPUT_JENKINS_URL \
+		-e INPUT_JENKINS_USER \
+		-e INPUT_JENKINS_TOKEN \
+		-e INPUT_JOB_NAME \
+		-e INPUT_JENKINS_PARAMS \
+	 	-e INPUT_CONSOLE_LOG_REGEX \
+	 	-e INPUT_CONSOLE_LOG_REGEX_GROUP \
 		"gympass/${APP}"
 
 test:

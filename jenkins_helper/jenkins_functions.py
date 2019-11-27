@@ -18,8 +18,8 @@ def get_regex_message(text, console_log_regex=None, console_log_regex_group=None
         return text
 
 
-def get_request_response(url, jenkins_user, jenkins_token, parse_json=True, **xargs):
-    request_response_object = requests.get(url, auth=(jenkins_user, jenkins_token), **xargs)
+def get_request_response(url, jenkins_user, jenkins_token, parse_json=True, **kwargs):
+    request_response_object = requests.get(url, auth=(jenkins_user, jenkins_token), **kwargs)
     status_code = request_response_object.status_code
     if status_code >= 200 and status_code < 300:
         request_response = request_response_object.json() if parse_json else request_response_object

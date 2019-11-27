@@ -1,5 +1,6 @@
 from jenkins_helper.jenkins_functions import *
-import json
+import sys
+
 
 jenkins_url = os.environ["INPUT_JENKINS_URL"]
 jenkins_user = os.environ["INPUT_JENKINS_USER"]
@@ -16,7 +17,7 @@ def main():
     job_run_url = get_job_run_url(queue_item_location, jenkins_user, jenkins_token)
     print(f"Job run URL: {job_run_url.replace('-github', '')}")
     job_progress(job_run_url, jenkins_user, jenkins_token)
-
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()
