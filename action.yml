@@ -14,7 +14,7 @@ inputs:
     description: 'Jenkins build parameters to use in job'
     required: false
   console_log_regex:
-    description: 'Jenkins console log regex to filter out unecessary output text. This regex run using re.DOTALL'
+    description: 'Base64 encoded jenkins console log regex to filter out unecessary output text. This regex search runs using re.DOTALL'
     required: false
   console_log_regex_group:
     description: 'Jenkins console log regex group number to collect specific match from regex grouping'

@@ -64,8 +64,8 @@ class DDLValidatorTest(unittest.TestCase):
         self.assertEqual(filtered_message, BUILD_MESSAGE)
 
 
-    def test_get_regex_message__with_regex_rule(self): 
-        filtered_message = get_regex_message(BUILD_MESSAGE, "(make validate_files)(.*?)(\[Pipeline\])", "2")
+    def test_get_regex_message__with_regex_rule(self):
+        filtered_message = get_regex_message(BUILD_MESSAGE, "KG1ha2UgdmFsaWRhdGVfZmlsZXMpKC4qPykoXFtQaXBlbGluZVxdKQ==", "2")
         expected_filtered_message = """
 ... Error after: `person_id` inteager comment '...
 ... DDL in line 9 from analysis.sql is invalid.

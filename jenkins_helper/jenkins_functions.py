@@ -4,6 +4,7 @@ import sys
 import os
 import re
 import json
+import base64
 
 
 IN_PROGRESS_MESSAGE = None
@@ -13,7 +14,8 @@ INTERVAL_SECONDS = 5
 
 def get_regex_message(text, console_log_regex=None, console_log_regex_group=None):
     if console_log_regex and console_log_regex_group:
-        return re.search(console_log_regex, text, re.DOTALL).group(int(console_log_regex_group))
+        decoded_regex = base64.b64decode(console_log_regex).decode("utf-8")
+        return re.search(decoded_regex, text, re.DOTALL).group(int(console_log_regex_group))
     else:
         return text
 
