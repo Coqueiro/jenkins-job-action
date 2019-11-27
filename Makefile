@@ -1,5 +1,6 @@
-APP = jenkins-job-action
-
+APP=jenkins-job-action
+BUMP_LEVEL?=patch
+VERSION=`cat VERSION`
 
 python:
 	@jenkins_url=${jenkins_url} \
@@ -27,3 +28,14 @@ run:
 
 test:
 	@python3 -m unittest tests.jenkins_functions_test
+
+bump:
+	@python3 -m pip install bumpversion==0.5.3
+	@bumpversion --current-version ${VERSION} ${BUMP_LEVEL} VERSION
+
+git_release:
+	@git add VERSION
+	@git commit -m "Version bump to ${VERSION}"
+	@git push origin master
+	@git tag -a -m "Tagging version ${VERSION}" ${VERSION}
+	@git push origin ${VERSION}
