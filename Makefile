@@ -27,9 +27,13 @@ run:
 		"gympass/${APP}"
 
 test:
+	@python3 -m pip install mock==3.0.5
 	@python3 -m unittest tests.jenkins_functions_test
 
-bump:
+install:
+	@python3 -m pip install -r requirements.txt
+
+bump: install test
 	@python3 -m pip install bumpversion==0.5.3
 	@bumpversion --current-version ${VERSION} ${BUMP_LEVEL} VERSION
 
