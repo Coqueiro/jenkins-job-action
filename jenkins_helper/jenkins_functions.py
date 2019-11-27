@@ -6,7 +6,7 @@ import re
 import json
 
 
-IN_PROGRESS_MESSAGE = "IN_PROGRESS"
+IN_PROGRESS_MESSAGE = None
 SUCCESS_MESSAGE = "SUCCESS"
 INTERVAL_SECONDS = 5
 
@@ -73,7 +73,7 @@ def get_job_run_url(queue_item_location, jenkins_user, jenkins_token):
 
 
 def job_progress(job_run_url, jenkins_user, jenkins_token):
-    job_follow_url = f"{job_run_url}wfapi/describe"
+    job_progress_url = f"{job_run_url}api/json"
     job_log_url = f"{job_run_url}logText/progressiveText"
 
     build_response = None
@@ -81,8 +81,8 @@ def job_progress(job_run_url, jenkins_user, jenkins_token):
     timeout_countdown = 30
     while build_result == IN_PROGRESS_MESSAGE and timeout_countdown > 0:
         try:
-            build_response = get_request_response(job_follow_url, jenkins_user, jenkins_token)
-            build_result = build_response["status"] if build_response else build_result
+            build_response = get_request_response(job_progress_url, jenkins_user, jenkins_token)
+            build_result = build_response["result"] if build_response["result"] else build_result
         except Exception as e:
             "Do nothing and try again"
         if build_result == IN_PROGRESS_MESSAGE:

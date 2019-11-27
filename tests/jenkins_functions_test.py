@@ -32,7 +32,7 @@ class MockResponse:
         self.headers = test_headers
         if self.json_data:
             self.json_data["executable"] = kwargs.get("executable")
-            self.json_data["status"] = kwargs.get("status")
+            self.json_data["result"] = kwargs.get("status")
 
     def json(self):
         return self.json_data
@@ -142,13 +142,13 @@ class DDLValidatorTest(unittest.TestCase):
     @mock.patch('time.sleep', return_value=None)
     @mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_job_progress__with_failure_status(self, mocked_requests_get, mock_sleep, mock_stdout):
-        job_progress("valid_url_return_success_status", "valid_user", "valid_token")
+        with self.assertRaises(SystemExit) as context:
+            job_progress("valid_url_return_failure_status", "valid_user", "valid_token")
 
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     @mock.patch('time.sleep', return_value=None)
     @mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_job_progress__with_success_status(self, mocked_requests_get, mock_sleep, mock_stdout):
-        with self.assertRaises(SystemExit) as context:
-            job_progress("valid_url_return_failure_status", "valid_user", "valid_token")
+        job_progress("valid_url_return_success_status", "valid_user", "valid_token")
  

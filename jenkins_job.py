@@ -1,6 +1,9 @@
 from jenkins_helper.jenkins_functions import *
 import sys
+import re
 
+
+DOMAIN_REGEX = "^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)"
 
 jenkins_url = os.environ["INPUT_JENKINS_URL"]
 jenkins_user = os.environ["INPUT_JENKINS_USER"]
@@ -15,8 +18,9 @@ def main():
     crumb = get_crumb(jenkins_url, jenkins_user, jenkins_token)
     queue_item_location = queue_job(crumb, jenkins_url, job_name, jenkins_params, jenkins_user, jenkins_token)
     job_run_url = get_job_run_url(queue_item_location, jenkins_user, jenkins_token)
-    print(f"Job run URL: {job_run_url.replace('-github', '')}")
-    job_progress(job_run_url, jenkins_user, jenkins_token)
+    print(f"Job run URL: {job_run_url}")
+    job_run_url_api_domain = re.sub(DOMAIN_REGEX, jenkins_url, job_run_url)
+    job_progress(job_run_url_api_domain, jenkins_user, jenkins_token)
     sys.exit(0)
 
 if __name__ == "__main__":
