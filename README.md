@@ -2,6 +2,8 @@
 
 This action can be used to trigger Jenkins job and follow up on build results, bringing back the log in case it fails. Can be used to introduce any sort of check validation before allowing merges, for example.
 
+[Read more actions here, in the official Github documentation.](https://help.github.com/en/actions/automating-your-workflow-with-github-actions)
+
 ## Inputs
 
 ### `jenkins_url`
@@ -36,9 +38,11 @@ Description: Jenkins console log regex group number to collect specific match fr
 
 ## Example usage
 
+Create a `.yml` file inside yout project in the path `.github/workflows/example.yml`. 
+
 ```yml
 name: Run Jenkins Job with Build Result
-on: [push]
+on: [push] # Can be any Github event
 jobs:
   build:
     name: Display name on Github
@@ -49,7 +53,7 @@ jobs:
       with:
         jenkins_url: "{JENKINS_URL}"
         jenkins_user: "{JENKINS_USER}"
-        jenkins_token: "${{ secrets.jenkins_token }}"
+        jenkins_token: "${{ secrets.jenkins_token }}" # Consider declaring this as a Github secret, for security purposes.
         job_name: "{JOB_NAME}"
         jenkins_params: '{"any_build_param_or_none": "value", "branch": "${GITHUB_SHA}"}' # Optional.
         console_log_regex: "KGVuY29kZWQpIChyZWdleCBydWxlKSAod2l0aCAzIHNlYXJjaCBncm91cHMp" # Optional. This is base64 encoded.
