@@ -1,6 +1,6 @@
 name: 'Run Jenkins Job with Build Result'
 description: 'Triggers Jenkins Job and follows up build result'
-author: 'Lucas Garcia'
+author: 'Data Platform Team'
 inputs:
   jenkins_url:
     description: 'Jenkins domain URL'
