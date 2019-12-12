@@ -12,7 +12,7 @@ job_name = os.environ["INPUT_JOB_NAME"]
 jenkins_params = os.environ.get("INPUT_JENKINS_PARAMS")
 console_log_regex = os.environ.get("INPUT_CONSOLE_LOG_REGEX")
 console_log_regex_group = int(os.environ.get("INPUT_CONSOLE_LOG_REGEX_GROUP"))
-job_timeout = int(os.environ["JOB_TIMEOUT"]/INTERVAL_SECONDS) if os.environ.get("JOB_TIMEOUT") else 30
+job_timeout = int(int(os.environ["JOB_TIMEOUT"])/INTERVAL_SECONDS) if os.environ.get("JOB_TIMEOUT") else 30
 
 
 def main():
