@@ -35,6 +35,10 @@ Description: Base64 encoded jenkins console log regex to filter out unecessary o
 
 Description: Jenkins console log regex group number to collect specific match from regex grouping.
 
+### `job_timeout` (**not required**)
+
+Description: Jenkins timeout period for called functions. Default to 150 seconds.
+
 
 ## Example usage
 
@@ -58,4 +62,5 @@ jobs:
         jenkins_params: '{"any_build_param_or_none": "value", "branch": "${GITHUB_SHA}"}' # Optional.
         console_log_regex: "KGVuY29kZWQpIChyZWdleCBydWxlKSAod2l0aCAzIHNlYXJjaCBncm91cHMp" # Optional. This is base64 encoded.
         console_log_regex_group: "2" # Optional.
+        job_timeout: "150" # Optional.
 ```

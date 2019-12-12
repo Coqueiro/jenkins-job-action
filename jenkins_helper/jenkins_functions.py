@@ -15,7 +15,7 @@ INTERVAL_SECONDS = 5
 def get_regex_message(text, console_log_regex=None, console_log_regex_group=None):
     if console_log_regex and console_log_regex_group:
         decoded_regex = base64.b64decode(console_log_regex).decode("utf-8")
-        return re.search(decoded_regex, text, re.DOTALL).group(int(console_log_regex_group))
+        return re.search(decoded_regex, text, re.DOTALL).group(console_log_regex_group)
     else:
         return text
 
@@ -46,9 +46,9 @@ def queue_job(crumb, jenkins_url, job_name, jenkins_params, jenkins_user, jenkin
     return queue_item_location
 
 
-def get_job_run_url(queue_item_location, jenkins_user, jenkins_token):
+def get_job_run_url(queue_item_location, jenkins_user, jenkins_token, job_timeout):
     job_run_url = None
-    timeout_countdown = 30
+    timeout_countdown = job_timeout
     
     while job_run_url == None and timeout_countdown > 0:
         try:
@@ -74,13 +74,13 @@ def get_job_run_url(queue_item_location, jenkins_user, jenkins_token):
     return job_run_url
 
 
-def job_progress(job_run_url, jenkins_user, jenkins_token):
+def job_progress(job_run_url, jenkins_user, jenkins_token, job_timeout, console_log_regex=None, console_log_regex_group=None):
     job_progress_url = f"{job_run_url}api/json"
     job_log_url = f"{job_run_url}logText/progressiveText"
 
     build_response = None
     build_result = IN_PROGRESS_MESSAGE
-    timeout_countdown = 30
+    timeout_countdown = job_timeout
     while build_result == IN_PROGRESS_MESSAGE and timeout_countdown > 0:
         try:
             build_response = get_request_response(job_progress_url, jenkins_user, jenkins_token)
@@ -100,7 +100,7 @@ def job_progress(job_run_url, jenkins_user, jenkins_token):
         print(f"DDL validation with {build_result} status.")
         try:
             log_response = get_request_response(job_log_url, jenkins_user, jenkins_token, parse_json=False).content.decode('utf8')
-            print(get_regex_message(log_response))
+            print(get_regex_message(log_response, console_log_regex,console_log_regex_group))
         except:
             print("Couldn't retrieve log messages.")
         sys.exit(1)
