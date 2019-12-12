@@ -16,6 +16,8 @@ job_timeout = int(int(os.environ["JOB_TIMEOUT"])/INTERVAL_SECONDS) if os.environ
 
 
 def main():
+    print("os_job_timeout:", os.environ.get("JOB_TIMEOUT"))
+    print("job_timeout:", job_timeout)
     crumb = get_crumb(jenkins_url, jenkins_user, jenkins_token)
     queue_item_location = queue_job(crumb, jenkins_url, job_name, jenkins_params, jenkins_user, jenkins_token)
     job_run_url = get_job_run_url(queue_item_location, jenkins_user, jenkins_token, job_timeout)
