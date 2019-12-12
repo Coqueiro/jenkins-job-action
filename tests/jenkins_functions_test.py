@@ -65,7 +65,7 @@ class DDLValidatorTest(unittest.TestCase):
 
 
     def test_get_regex_message__with_regex_rule(self):
-        filtered_message = get_regex_message(BUILD_MESSAGE, "KG1ha2UgdmFsaWRhdGVfZmlsZXMpKC4qPykoXFtQaXBlbGluZVxdKQ==", "2")
+        filtered_message = get_regex_message(BUILD_MESSAGE, "KG1ha2UgdmFsaWRhdGVfZmlsZXMpKC4qPykoXFtQaXBlbGluZVxdKQ==", 2)
         expected_filtered_message = """
 ... Error after: `person_id` inteager comment '...
 ... DDL in line 9 from analysis.sql is invalid.
@@ -119,14 +119,14 @@ class DDLValidatorTest(unittest.TestCase):
     @mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_get_job_run_url__without_response_answer_with_executable(self, mocked_requests_get, mock_sleep, mock_stdout):
         with self.assertRaises(SystemExit) as context:
-            job_run_url = get_job_run_url("valid_url", "valid_user", "valid_token")
+            job_run_url = get_job_run_url("valid_url", "valid_user", "valid_token", 30)
 
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     @mock.patch('time.sleep', return_value=None)
     @mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_get_job_run_url__with_response_answer_with_executable(self, mocked_requests_get, mock_sleep, mock_stdout):
-        job_run_url = get_job_run_url("valid_url_return_executable", "valid_user", "valid_token")
+        job_run_url = get_job_run_url("valid_url_return_executable", "valid_user", "valid_token", 30)
         self.assertEqual(job_run_url, test_executable["url"])
 
 
@@ -135,7 +135,7 @@ class DDLValidatorTest(unittest.TestCase):
     @mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_job_progress__with_in_progress_status(self, mocked_requests_get, mock_sleep, mock_stdout):
         with self.assertRaises(SystemExit) as context:
-            job_progress("valid_url_return_in_progress_status", "valid_user", "valid_token")
+            job_progress("valid_url_return_in_progress_status", "valid_user", "valid_token", 30)
 
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
@@ -143,12 +143,12 @@ class DDLValidatorTest(unittest.TestCase):
     @mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_job_progress__with_failure_status(self, mocked_requests_get, mock_sleep, mock_stdout):
         with self.assertRaises(SystemExit) as context:
-            job_progress("valid_url_return_failure_status", "valid_user", "valid_token")
+            job_progress("valid_url_return_failure_status", "valid_user", "valid_token", 30)
 
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     @mock.patch('time.sleep', return_value=None)
     @mock.patch('sys.stdout', new_callable=io.StringIO)
     def test_job_progress__with_success_status(self, mocked_requests_get, mock_sleep, mock_stdout):
-        job_progress("valid_url_return_success_status", "valid_user", "valid_token")
+        job_progress("valid_url_return_success_status", "valid_user", "valid_token", 30)
  
