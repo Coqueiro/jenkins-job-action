@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Display step name on Github
-      uses: Gympass/jenkins-job-action@0.0.5
+      uses: Domain/jenkins-job-action@0.0.5
       with:
         jenkins_url: "{JENKINS_URL}"
         jenkins_user: "{JENKINS_USER}"
